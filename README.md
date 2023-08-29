@@ -1,3 +1,9 @@
+## YOUTUBE EXACT CODE
+
+If you are following the exact code from the YouTube series, you can get the code with exactly what is shown in that series here:
+
+https://github.com/coderaidershaun/youtube-series-flashloan-bsc.git
+
 ## Step 1
 
 Make sure node, ts-node and yarn are installed globally on your machine and download the githum package in whatever folder you like.
