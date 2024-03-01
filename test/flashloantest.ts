@@ -7,7 +7,7 @@ import { abi as abiFlashLoan } from "../artifacts/contracts/FlashLoan.sol/FlashL
 
 // Whale Setup
 // https://bscscan.com/token/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56#balances
-const WHALE_ADDR_BUSD = "0x28C6c06298d514Db089934071355E5743bf21d60";
+const WHALE_ADDR_BUSD = "0x7e4390281401fC8da0DC5E8641307B8585D65732";
 
 // ONLY USE IF ALREADY DEPLOYED - otherwise make blank
 const FLASH_CONTRACT = "";
@@ -41,7 +41,7 @@ describe("BinanceFlashloanPancakeswapV3", function () {
       params: [WHALE_ADDR_BUSD],
     });
     const whaleWallet = ethers.provider.getSigner(WHALE_ADDR_BUSD);
-    expect(whaleWallet.getBalance()).not.equal("0");
+    expect(await whaleWallet.getBalance()).not.equal("0");
 
     // Ensure USDT balance
     const abi = [
@@ -49,6 +49,12 @@ describe("BinanceFlashloanPancakeswapV3", function () {
     ];
     const contractBusd = new ethers.Contract(BORROW_TOKEN_BUSD, abi, provider);
     const balanceBusd = await contractBusd.balanceOf(WHALE_ADDR_BUSD);
+    if (balanceBusd == "0") {
+      console.log("Looks like the whale wallet balance has moved to zero.");
+      console.log(
+        `Try replacing the WHALE Wallet address above named as WHALE_ADDR_BUSD in the test/flashloantest.ts file on line 10, with another one at https://bscscan.com/token/0xe9e7cea3dedca5984780bafc599bd69add087d56#balances`
+      );
+    }
     expect(balanceBusd).not.equal("0");
 
     // Return whale wallet
