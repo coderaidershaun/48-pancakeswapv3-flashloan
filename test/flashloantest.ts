@@ -7,7 +7,7 @@ import { abi as abiFlashLoan } from "../artifacts/contracts/FlashLoan.sol/FlashL
 
 // Whale Setup
 // https://bscscan.com/token/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56#balances
-const WHALE_ADDR_BUSD = "0x7e4390281401fC8da0DC5E8641307B8585D65732";
+const WHALE_ADDR_BUSD = "0x20eAaA20002c9Ae5972b15FacaC7914974578ea9";
 
 // ONLY USE IF ALREADY DEPLOYED - otherwise make blank
 const FLASH_CONTRACT = "";
@@ -33,6 +33,12 @@ describe("BinanceFlashloanPancakeswapV3", function () {
 
     // Ensure BNB balance not zero (for making transactions)
     const whaleBalance = await provider.getBalance(WHALE_ADDR_BUSD);
+    const bal = Number(whaleBalance.toString());
+    if (bal == 0) {
+      console.log(
+        `Try replacing the WHALE Wallet address above named as WHALE_ADDR_BUSD in the test/flashloantest.ts file on line 10, with another one at https://bscscan.com/token/0xe9e7cea3dedca5984780bafc599bd69add087d56#balances`
+      );
+    }
     expect(whaleBalance).not.equal("0");
 
     // Impersonate WETH Account
